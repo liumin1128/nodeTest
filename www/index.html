@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1">
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <meta name="msapplication-TileImage" content="assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#0e90d2">
+    <!-- <link rel="icon" sizes="192x192" href="assets/i/app-icon72x72@2x.png"> -->
+    <!-- <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png"> -->
+    <!-- <link rel="icon" type="image/png" href="assets/i/favicon.png"> -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome/font-awesome.css" type="text/css" charset="utf-8">
+    <link rel="stylesheet" href="css/style.css">
+    <title>chat</title>
+
+</head>
+<body>
+    <!--在这里编写你的代码-->
+
+
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid clearfix">
+            <div class="navbar-header pull-left">
+                <a class="navbar-brand" href="http://www.liumin.me">
+                    <img alt="Brand" src="img/logo.png">
+                </a>
+                <!-- <h1 class="col-xs-8">让世界更美好</h1> -->
+
+            </div>
+            <div class="users pull-right">
+                <i class="fa fa-user"></i>
+                <span class="usersnum">1</span>
+            </div>
+        </div>
+    </nav>
+        <!-- <h1>聊天室</h1> -->
+        <!-- <span class="usersnum">当前1人在线</span> -->
+
+
+    <div class="container j_container">
+        <div class="chat center-block">
+            <button type="button" class="btn btn-primary plusbtn btn-lg" data-toggle="modal" data-target="#input-modal"><i class="fa fa-plus"></i></button>
+            <div class="messages">
+                <div class="message row">
+                    <div class="col-sm-1 col-xs-2">
+                        <div class="head center-block">
+                            <img src="img/head.png" class="img-responsive img-circle center-block" alt="Responsive image">
+                        </div>
+                    </div>
+                    <div class="col-sm-10 col-xs-8 clearfix">
+                        <p>liumin.me</p>
+                        <div class="content pull-left">
+                            Hi~,本程序基于node实现,目前只有即时聊天,发送图片和表情包等功能.
+                            <br>现在头像,字体样式会随机得到,也可以自己设置哦
+                            <br>使用手机的小伙伴们可以点击右下角的按钮发言,但由于性能问题可能会比较慢...
+                            <br>使用电脑访问的小伙伴们就非常舒服啦,可以使用回车键快速发言...
+                        </div>
+                        <span class="sl"></span>
+                    </div>
+                </div>
+
+
+
+                <!-- <div class="message row">
+                    <div class="col-sm-1 col-xs-2"></div>
+                    <div class="col-sm-1 col-sm-push-10 col-xs-2 col-xs-push-8">
+                        <div class="head center-block">
+                            <img src="img/head.png" class="img-responsive img-circle center-block" alt="Responsive image">
+                        </div>
+                    </div>
+                    <div class="col-sm-10 col-sm-pull-1 col-xs-8 col-xs-pull-2 clearfix">
+                        <p class="text-right">用户名(11:11:11)</p>
+                        <div class="content pull-left">
+                            一如之前所说，socket.io在前后端的句法是一致的，所以相反地，从服务器发送事件到客户端，在客户端接收并处理消息也是显而易见的事件了。这里只是简单介绍，具体下面会通过发送聊天消息进一步介绍。
+                        </div>
+                        <span class="sr"></span>
+                    </div>
+                </div> -->
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+<!-- 登陆面板 -->
+<div class="modal fade" data-backdrop="static" id="login" tabindex="-1" role="dialog" aria-labelledby="loginLabel">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+               <!--  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button> -->
+                <h4 class="modal-title" id="loginLabel">登录  ～(￣▽￣～)(～￣▽￣)～</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <!-- <form class="center-block"> -->
+                            <div class="form center-block">
+                                <label for="exampleInputEmail1">输入昵称以加入聊天室</label>
+                                <div class="input-group input-group-lg">
+                                    <span class="input-group-addon" id="username"><i class="fa fa-user"></i></span>
+                                    <input type="text" class="nickname form-control" placeholder="请输2~6个字节" aria-describedby="username">
+                                </div>
+                                <button type="button" class="btn mybtn center-block btn-lg btn-default">登录</button>
+                            </div>
+
+                            <!-- </form> -->
+                        </div>
+                       <!--  <div class="col-sm-6">
+                            <div class="heads row center-block">
+                                <div class="head col-xs-3">
+                                    <img src="img/head.png" class="img-responsive img-circle center-block" alt="Responsive image">
+                                </div>
+                                <div class="head col-xs-3">
+                                    <img src="img/head.png" class="img-responsive img-circle center-block" alt="Responsive image">
+                                </div>
+                                <div class="head col-xs-3">
+                                    <img src="img/head.png" class="img-responsive img-circle center-block" alt="Responsive image">
+                                </div>
+                                <div class="head col-xs-3">
+                                    <img src="img/head.png" class="img-responsive img-circle center-block" alt="Responsive image">
+                                </div>
+                                <div class="head col-xs-3">
+                                    <img src="img/head.png" class="img-responsive img-circle center-block" alt="Responsive image">
+                                </div>
+                                <div class="head col-xs-3">
+                                    <img src="img/head.png" class="img-responsive img-circle center-block" alt="Responsive image">
+                                </div>
+                                <div class="head col-xs-3">
+                                    <img src="img/head.png" class="img-responsive img-circle center-block" alt="Responsive image">
+                                </div>
+                                <div class="head col-xs-3">
+                                    <img src="img/head.png" class="img-responsive img-circle center-block" alt="Responsive image">
+                                </div>
+                                <div class="head col-xs-3">
+                                    <img src="img/head.png" class="img-responsive img-circle center-block" alt="Responsive image">
+                                </div>
+                                <div class="head col-xs-3">
+                                    <img src="img/head.png" class="img-responsive img-circle center-block" alt="Responsive image">
+                                </div>
+                                <div class="head col-xs-3">
+                                    <img src="img/head.png" class="img-responsive img-circle center-block" alt="Responsive image">
+                                </div>
+                                <div class="head col-xs-3">
+                                    <img src="img/head.png" class="img-responsive img-circle center-block" alt="Responsive image">
+                                </div>
+                            </div>
+                        </div> -->
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+                <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 输入面板 -->
+<div class="modal fade sent" id="input-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+           <!--  <div class="modal-header">
+            </div> -->
+            <div class="modal-body">
+                <textarea autoHeight="true" class="form-control sentinput" rows="3" placeholder="请输入"></textarea>
+            </div>
+            <div class="modal-footer">
+                <div class="toolbars clearfix">
+                    <div class="toolbar btn-group pull-left" role="group" aria-label="...">
+                        <button type="button" class="btn fontbtn btn-default">
+                            <i class="fa fa-font"></i>
+                        </button>
+                        <button type="button" class="btn btn-default">
+                            <i class="fa fa-image"></i>
+                        </button>
+                        <button type="button" class="btn emojibtn btn-default">
+                            <i class="fa fa-smile-o"></i>
+                        </button>
+                        <button type="button" class="btn facebtn btn-default">
+                            <i class="fa fa-camera "></i>
+                        </button>
+                        <button type="button" class="btn clearbtn btn-default">
+                            <i class="fa fa-rotate-left"></i>
+                        </button>
+                        <input type="file" id="sentimg">
+                    </div>
+                    <button class="btn sentbtn pull-right btn-default" type="button">发送</button>
+
+                </div>
+
+                <div class="emoji center-block clearfix">
+                    <img src="img/lion/01.gif" alt="" class="pull-left" title="lion01">
+                    <img src="img/lion/02.gif" alt="" class="pull-left" title="lion02">
+                    <img src="img/lion/03.gif" alt="" class="pull-left" title="lion03">
+                    <img src="img/lion/04.gif" alt="" class="pull-left" title="lion04">
+                    <img src="img/lion/05.gif" alt="" class="pull-left" title="lion05">
+                    <img src="img/lion/06.gif" alt="" class="pull-left" title="lion06">
+                    <img src="img/lion/07.gif" alt="" class="pull-left" title="lion07">
+                    <img src="img/lion/08.gif" alt="" class="pull-left" title="lion08">
+                    <img src="img/lion/09.gif" alt="" class="pull-left" title="lion09">
+                    <img src="img/lion/10.gif" alt="" class="pull-left" title="lion10">
+                    <img src="img/lion/11.gif" alt="" class="pull-left" title="lion11">
+                    <img src="img/lion/12.gif" alt="" class="pull-left" title="lion12">
+                    <img src="img/lion/13.gif" alt="" class="pull-left" title="lion13">
+                    <img src="img/lion/14.gif" alt="" class="pull-left" title="lion14">
+                    <img src="img/lion/15.gif" alt="" class="pull-left" title="lion15">
+                    <img src="img/lion/16.gif" alt="" class="pull-left" title="lion16">
+                    <img src="img/lion/17.gif" alt="" class="pull-left" title="lion17">
+                    <img src="img/lion/18.gif" alt="" class="pull-left" title="lion18">
+                    <img src="img/lion/19.gif" alt="" class="pull-left" title="lion19">
+                    <img src="img/lion/20.gif" alt="" class="pull-left" title="lion20">
+                    <img src="img/lion/21.gif" alt="" class="pull-left" title="lion21">
+                    <img src="img/lion/22.gif" alt="" class="pull-left" title="lion22">
+                    <img src="img/lion/23.gif" alt="" class="pull-left" title="lion23">
+                    <img src="img/lion/24.gif" alt="" class="pull-left" title="lion24">
+                    <img src="img/lion/25.gif" alt="" class="pull-left" title="lion25">
+                    <img src="img/lion/26.gif" alt="" class="pull-left" title="lion26">
+                    <img src="img/lion/27.gif" alt="" class="pull-left" title="lion27">
+                    <img src="img/lion/28.gif" alt="" class="pull-left" title="lion28">
+                    <img src="img/lion/29.gif" alt="" class="pull-left" title="lion29">
+                    <img src="img/lion/30.gif" alt="" class="pull-left" title="lion30">
+                    <img src="img/lion/31.gif" alt="" class="pull-left" title="lion31">
+                    <img src="img/lion/32.gif" alt="" class="pull-left" title="lion32">
+                    <img src="img/lion/33.gif" alt="" class="pull-left" title="lion33">
+                </div>
+
+                <div class="font-set clearfix">
+                    <div class="pull-left">
+                        前景色:
+                        <input class="fontColor" value="#111111" type="color" name="fname" />
+                    </div>
+                    <div class="pull-left">
+                        背景色:
+                        <input class="bgColor" value="#99CCCC" type="color" name="fname" />
+                    </div>
+                    <div class="pull-left">
+                        字体:
+                        <select class="fontSize">
+                            <option>12px</option>
+                            <option selected="selected">14px</option>
+                            <option>16px</option>
+                            <option>18px</option>
+                            <option>20px</option>
+                            <option>30px</option>
+                            <option>40px</option>
+                            <option>50px</option>
+                            <option>100px</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="heads clearfix">
+                    <img src="img/face/face1.jpg" alt="" class="pull-left" title="face1">
+                    <img src="img/face/face2.jpg" alt="" class="pull-left" title="face2">
+                    <img src="img/face/face3.jpg" alt="" class="pull-left" title="face3">
+                    <img src="img/face/face4.jpg" alt="" class="pull-left" title="face4">
+                    <img src="img/face/face5.jpg" alt="" class="pull-left" title="face5">
+                    <img src="img/face/face6.jpg" alt="" class="pull-left" title="face6">
+                    <img src="img/face/face7.jpg" alt="" class="pull-left" title="face7">
+                    <img src="img/face/face8.jpg" alt="" class="pull-left" title="face8">
+                    <img src="img/face/face9.jpg" alt="" class="pull-left" title="face9">
+                    <img src="img/face/face10.jpg" alt="" class="pull-left" title="face10">
+                    <img src="img/face/face11.jpg" alt="" class="pull-left" title="face11">
+                    <img src="img/face/face12.jpg" alt="" class="pull-left" title="face12">
+                    <img src="img/face/face13.jpg" alt="" class="pull-left" title="face13">
+                    <img src="img/face/face14.jpg" alt="" class="pull-left" title="face14">
+                    <img src="img/face/face15.jpg" alt="" class="pull-left" title="face15">
+                    <img src="img/face/face16.jpg" alt="" class="pull-left" title="face16">
+                    <img src="img/face/face17.jpg" alt="" class="pull-left" title="face17">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 正在连接 -->
+<div class="modal" data-backdrop="static" id="connect" tabindex="-1" role="dialog" aria-labelledby="loginLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+               <!--  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button> -->
+                <h4 class="modal-title" id="loginLabel">聊天室</h4>
+            </div>
+            <div class="modal-body">
+                <h1>正在连接服务器...</h1>
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+                <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+    <!--[if (gte IE 9)|!(IE)]>
+    <!-->
+    <script src="js/jquery-2.1.3.min.js"></script>
+    <!--<![endif]-->
+    <!--[if lte IE 8 ]>
+    <script src="http://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <script src="http://cdn.bootcss.com/html5shiv/r29/html5.min.js"></script>
+    <script src="assets/js/amazeui.ie8polyfill.min.js"></script>
+    <![endif]-->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.cookie.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/chat.js"></script>
+
+</body>
+</html>
